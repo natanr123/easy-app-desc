@@ -30,7 +30,6 @@ export class EasyAppDescPage extends React.PureComponent {
       return;
     }
     let state  = JSON.parse(stateStr);
-    console.log('sssssssSSSSS: ',state);
     this.setState(state);
   }
 

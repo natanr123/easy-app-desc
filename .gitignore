@@ -13,10 +13,10 @@ npm-debug.log
 yarn-error.log
 
 # exclude everything
-uploads/*
+user_uploads/*
 
 # exception to the rule
-!uploads/.gitkeep
+!user_uploads/.gitkeep
 
 # exclude everything
 temp/*
