@@ -17,3 +17,9 @@ uploads/*
 
 # exception to the rule
 !uploads/.gitkeep
+
+# exclude everything
+temp/*
+
+# exception to the rule
+!temp/.gitkeep

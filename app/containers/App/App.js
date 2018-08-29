@@ -21,18 +21,16 @@ import './style.scss';
 const App = () => (
   <div className="app-wrapper">
     <Helmet
-      titleTemplate="%s - React.js Boilerplate"
-      defaultTitle="React.js Boilerplate"
+      titleTemplate="%s - Easy App Desc"
+      defaultTitle="Easy App Desc"
     >
-      <meta name="description" content="A React.js Boilerplate application" />
+      <meta name="description" content="Help you upload you app to google play store and help you with the google console" />
     </Helmet>
-    <Header />
     <Switch>
       <Route exact path="/" component={EasyAppDescPage} />
       <Route path="/features" component={FeaturePage} />
       <Route path="" component={NotFoundPage} />
     </Switch>
-    <Footer />
   </div>
 );
 

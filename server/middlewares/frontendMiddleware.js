@@ -5,6 +5,7 @@
  */
 module.exports = (app, options) => {
   const isProd = process.env.NODE_ENV === 'production';
+  console.log('isProdisProdisProd: ', isProd);
 
   if (isProd) {
     const addProdMiddlewares = require('./addProdMiddlewares');

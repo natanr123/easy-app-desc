@@ -25,7 +25,6 @@ export class EasyAppDescPage extends React.PureComponent {
 
 
   componentDidMount() {
-    console.log('aaaaaaaaaaaaaaaaaaaaa');
     let stateStr = window.localStorage.getItem('state');
     if(!stateStr) {
       return;
@@ -46,8 +45,7 @@ export class EasyAppDescPage extends React.PureComponent {
           />
         </Helmet>
         <div>
-          <p>bbbbbbbbbbbbbbbbbb</p>
-          <h3>App</h3>
+          <h3>Store Listing</h3>
           {
             this.createInput('title')
           }
@@ -58,8 +56,8 @@ export class EasyAppDescPage extends React.PureComponent {
             this.createInput('fullDescription')
           }
           <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-            <input type="file" name={'file'} onChange={this.props.handleFileUpload} />
-            <input type={'submit'} />
+            Convert To 512x512 Hi-res icon:
+            <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={this.props.handleFileUpload} />
           </form>
 
 
@@ -76,7 +74,6 @@ export class EasyAppDescPage extends React.PureComponent {
   }
 
   createInput(name) {
-//
     const onInputChange = (e)=>{
       let newStore  = { ...this.state.storeListing }
       newStore[name] = e.target.value;
@@ -106,8 +103,6 @@ export function mapDispatchToProps(dispatch) {
     },
     handleFileUpload: (e) => {
       const file = e.target.files[0];
-      console.log('onUploadButtonClickedonUploa44444444444: ', file);
-
       dispatch(actions.uploadImage(file));
     }
   };
