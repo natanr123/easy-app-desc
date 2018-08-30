@@ -8,3 +8,10 @@ export function uploadImage(file) {
   };
 }
 
+
+export function convertedImageCreated(path) {
+  return {
+    type: constants.CONVERTED_IMAGE_CREATED,
+    path,
+  };
+}

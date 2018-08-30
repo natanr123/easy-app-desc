@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-// import { createProblem, problemCreated, errorCreatingProblem } from './actions';
+import * as actions from './actions';
 import * as constants from './constants';
 
 
@@ -12,8 +12,7 @@ function sendUploadFile(file) {
 
 export function* uploadImageWorker(action) {
   const response = yield call(sendUploadFile, action.file);
-  console.log('rrrrrrrrr: ', response);
-  //yield put(problemCreated());
+  yield put(actions.convertedImageCreated(response.data.path));
 }
 
 export default function* watcher() {

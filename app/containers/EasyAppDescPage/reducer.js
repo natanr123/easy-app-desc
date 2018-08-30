@@ -1,14 +1,12 @@
 import { fromJS } from 'immutable';
-import {
-
-} from './constants';
-export const initialState = fromJS({});
+import * as constants from './constants';
+export const initialState = fromJS( {image512path: ''} );
 
 function problemReducer(state = initialState, action) {
   switch (action.type) {
-    case 'zzzzzzzzzzz':
-      console.log('CREATE_PROBLEMCREATE_PROBLEMCREATE_PROBLEMCREATE_PROBLEM');
-      return state.set('hello', 'world');
+    case constants.CONVERTED_IMAGE_CREATED:
+      console.log('CONVERTED_IMAGE_CREATEDCONVERTED_IMAGE_CREATEDCONVERTED_IMAGE_CREATED: ',action);
+      return state.set('image512path', action.path);
     default:
       return state;
   }

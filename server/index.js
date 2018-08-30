@@ -37,10 +37,10 @@ app.post('/uploads', upload.single('file'), (req, res) => {
   const outputFilename = `hi_res_icon_512x512_${filename}`;
   const outputPath = `./${userUploadsFolder}/${outputFilename}`;
   sharp(`./${path}`)
-    .resize(512,512).png().toFile(outputPath)
+    .resize(512,512).ignoreAspectRatio().png().toFile(outputPath)
     .then((data) => {
       console.log(data);
-      const output = {convertedImage: `/${userUploadsFolder}/${outputFilename}` };
+      const output = { path: `/${userUploadsFolder}/${outputFilename}` };
       res.send(output);
     });
 

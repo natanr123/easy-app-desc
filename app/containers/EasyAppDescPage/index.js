@@ -33,45 +33,6 @@ export class EasyAppDescPage extends React.PureComponent {
     this.setState(state);
   }
 
-  render() {
-    return (
-      <article>
-        <Helmet>
-          <title>Easy App Desc</title>
-          <meta
-            name="Easy App Desc page"
-            content="A React.js Boilerplate application homepage"
-          />
-        </Helmet>
-        <div>
-          <h3>Store Listing</h3>
-          {
-            this.createInput('title')
-          }
-          {
-            this.createInput('shortDescription')
-          }
-          {
-            this.createInput('fullDescription')
-          }
-          <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-            Convert To 512x512 Hi-res icon:
-            <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={this.props.handleFileUpload} />
-          </form>
-
-
-          <br />
-          <button
-            onClick={() => {
-              this.props.onSubmitButtonClicked(this.state.problem);
-            }}
-          >
-          </button>
-        </div>
-      </article>
-    );
-  }
-
   createInput(name) {
     const onInputChange = (e)=>{
       let newStore  = { ...this.state.storeListing }
@@ -92,6 +53,55 @@ export class EasyAppDescPage extends React.PureComponent {
       </p>
     );
   }
+
+  render() {
+    const { image512path } = this.props;
+    console.log('image512pathimage512pathimage512path: ',image512path);
+    return (
+      <article>
+        <Helmet>
+          <title>Easy App Desc</title>
+          <meta
+            name="Easy App Desc page"
+            content="A React.js Boilerplate application homepage"
+          />
+        </Helmet>
+        <div>
+          <h3>Store Listing</h3>
+          {
+            this.createInput('title')
+          }
+          {
+            this.createInput('shortDescription')
+          }
+          {
+            this.createInput('fullDescription')
+          }
+          <div>
+            <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
+              Convert To 512x512 Hi-res icon:
+              <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={this.props.handleFileUpload} />
+            </form>
+            <div>
+              <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+            </div>
+
+
+          </div>
+
+          <br />
+          <button
+            onClick={() => {
+              this.props.onSubmitButtonClicked(this.state.problem);
+            }}
+          >
+          </button>
+        </div>
+      </article>
+    );
+  }
+
+
 }
 
 export function mapDispatchToProps(dispatch) {
@@ -110,10 +120,13 @@ export function mapDispatchToProps(dispatch) {
 EasyAppDescPage.propTypes = {
   onSubmitButtonClicked: PropTypes.func,
   handleFileUpload: PropTypes.func,
+  image512path: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return {};
+  return {
+    image512path: state.get('easyAppDesc').get('image512path'),
+  };
 };
 
 const withConnect = connect(
