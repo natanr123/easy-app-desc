@@ -4,14 +4,16 @@ import * as actions from './actions';
 import * as constants from './constants';
 
 
-function sendUploadFile(file) {
+function sendUploadFile(file, photoType) {
+  console.log('ssssssssssssssssssssssss');
   const formData = new FormData();
   formData.append('file', file);
-  return axios.post('/uploads', formData);
+  const host = 'http://localhost:3001';
+  return axios.post(`${host}/uploads/${photoType}`, formData);
 }
 
 export function* uploadImageWorker(action) {
-  const response = yield call(sendUploadFile, action.file);
+  const response = yield call(sendUploadFile, action.file, action.photoType);
   yield put(actions.convertedImageCreated(response.data.path));
 }
 

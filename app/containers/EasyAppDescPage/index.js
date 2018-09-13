@@ -78,15 +78,24 @@ export class EasyAppDescPage extends React.PureComponent {
             this.createInput('fullDescription')
           }
           <div>
-            <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-              Convert To 512x512 Hi-res icon:
-              <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={this.props.handleFileUpload} />
-            </form>
+
+
             <div>
-              <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
+                Convert To Min length for any side: 320px. Max length for any side: 3840px. Max aspect ratio: 2:1.:
+                <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'screenshoot')}} />
+              </form>
             </div>
-
-
+            <br />
+            <div>
+              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
+                Convert To 512x512 Hi-res icon:
+                <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'icon-high-res')}} />
+              </form>
+              <div>
+                <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+              </div>
+            </div>
           </div>
 
           <br />
@@ -110,9 +119,10 @@ export function mapDispatchToProps(dispatch) {
       //console.log('onSubmitButtonClickedonSubmitButtonClicked: ', problem);
       //dispatch(createProblem(problem));
     },
-    handleFileUpload: (e) => {
+    handleFileUpload: (e, photoType) => {
+      console.log('photoTypephotoTypephotoType: ', photoType);
       const file = e.target.files[0];
-      dispatch(actions.uploadImage(file));
+      dispatch(actions.uploadImage(file, photoType));
     }
   };
 }
