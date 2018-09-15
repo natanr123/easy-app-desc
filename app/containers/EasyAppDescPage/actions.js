@@ -10,9 +10,10 @@ export function uploadImage(file, photoType) {
 }
 
 
-export function convertedImageCreated(path) {
+export function convertedImageCreated(path, photoType) {
   return {
     type: constants.CONVERTED_IMAGE_CREATED,
     path,
+    photoType,
   };
 }

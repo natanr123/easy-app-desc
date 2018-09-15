@@ -85,12 +85,15 @@ export class EasyAppDescPage extends React.PureComponent {
                 Convert To Min length for any side: 320px. Max length for any side: 3840px. Max aspect ratio: 2:1.:
                 <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'screenshoot')}} />
               </form>
+              <div>
+                <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+              </div>
             </div>
             <br />
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To 512x512 Hi-res icon:
-                <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'icon-high-res')}} />
+                <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'icon_high_res')}} />
               </form>
               <div>
                 <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />

@@ -3,18 +3,18 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as constants from './constants';
 
+const host = 'http://localhost:3001';
 
 function sendUploadFile(file, photoType) {
-  console.log('ssssssssssssssssssssssss');
   const formData = new FormData();
   formData.append('file', file);
-  const host = 'http://localhost:3001';
   return axios.post(`${host}/uploads/${photoType}`, formData);
 }
 
 export function* uploadImageWorker(action) {
   const response = yield call(sendUploadFile, action.file, action.photoType);
-  yield put(actions.convertedImageCreated(response.data.path));
+  const data = response.data;
+  yield put(actions.convertedImageCreated(`${host}${data.path}`, data.photoType));
 }
 
 export default function* watcher() {
