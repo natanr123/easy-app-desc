@@ -7,7 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-import { loadState, saveState } from './localStorage';
+import { loadState, saveState, logger } from './localStorage';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,7 +15,10 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
+  const persistedState = loadState();
   const middlewares = [
+    saveState,
+    logger,
     sagaMiddleware,
     routerMiddleware(history),
   ];
@@ -39,7 +42,7 @@ export default function configureStore(initialState = {}, history) {
   /* eslint-enable */
 
   // https://gist.github.com/mnishiguchi/12f72196fdc33e4fca3751ff47e9d621;
-  const persistedState = loadState();
+
 
   const store = createStore(
     createReducer(),
