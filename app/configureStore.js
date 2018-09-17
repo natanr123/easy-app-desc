@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import { loadState, saveState } from './localStorage';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,6 +37,9 @@ export default function configureStore(initialState = {}, history) {
       })
       : compose;
   /* eslint-enable */
+
+  // https://gist.github.com/mnishiguchi/12f72196fdc33e4fca3751ff47e9d621;
+  const persistedState = loadState();
 
   const store = createStore(
     createReducer(),
