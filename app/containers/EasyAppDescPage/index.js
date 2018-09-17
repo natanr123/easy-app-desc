@@ -55,8 +55,10 @@ export class EasyAppDescPage extends React.PureComponent {
   }
 
   render() {
-    const { image512path } = this.props;
-    console.log('image512pathimage512pathimage512path: ',image512path);
+    const { images } = this.props;
+    console.log('imagesimagesimagesimagesimagesimages: ', images);
+    const iconHiResSrc = images['icon_high_res'];
+    const screenshootSrc = images['screenshoot'];
     return (
       <article>
         <Helmet>
@@ -86,7 +88,7 @@ export class EasyAppDescPage extends React.PureComponent {
                 <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'screenshoot')}} />
               </form>
               <div>
-                <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+                <img style={{ width: '100px', height: '100px' }} alt={screenshootSrc} src={screenshootSrc} />
               </div>
             </div>
             <br />
@@ -96,7 +98,7 @@ export class EasyAppDescPage extends React.PureComponent {
                 <input type="file" name={'file'} onClick={(event) => { event.target.value = null; }} onChange={(e) => {this.props.handleFileUpload(e, 'icon_high_res')}} />
               </form>
               <div>
-                <img style={{ width: '100px', height: '100px' }} alt={image512path} src={image512path} />
+                <img style={{ width: '100px', height: '100px' }} alt={iconHiResSrc} src={iconHiResSrc} />
               </div>
             </div>
           </div>
@@ -133,12 +135,12 @@ export function mapDispatchToProps(dispatch) {
 EasyAppDescPage.propTypes = {
   onSubmitButtonClicked: PropTypes.func,
   handleFileUpload: PropTypes.func,
-  image512path: PropTypes.string,
+  images: PropTypes.any,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    image512path: state.get('easyAppDesc').get('image512path'),
+    images: state.get('easyAppDesc').get('images'),
   };
 };
 

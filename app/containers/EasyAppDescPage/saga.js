@@ -14,7 +14,7 @@ function sendUploadFile(file, photoType) {
 export function* uploadImageWorker(action) {
   const response = yield call(sendUploadFile, action.file, action.photoType);
   const data = response.data;
-  yield put(actions.convertedImageCreated(`${host}${data.path}`, data.photoType));
+  yield put(actions.convertedImageCreated(`${data.path}`, data.photoType));
 }
 
 export default function* watcher() {
