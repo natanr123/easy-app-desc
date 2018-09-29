@@ -25,31 +25,28 @@ export class EasyAppDescPage extends React.PureComponent {
 
 
   componentDidMount() {
-    let stateStr = window.localStorage.getItem('state');
-    if(!stateStr) {
-      return;
-    }
-    let state  = JSON.parse(stateStr);
-    this.setState(state);
+    // let stateStr = window.localStorage.getItem('state');
+    // if(!stateStr) {
+    //   return;
+    // }
+    // let state  = JSON.parse(stateStr);
+    // this.setState(state);
   }
 
-  createInput(name) {
-    const onInputChange = (e)=>{
-      let newStore  = { ...this.state.storeListing }
-      newStore[name] = e.target.value;
-      let newState = { ...this.state };
-      newState.storeListing = newStore;
-
-      let myStorage = window.localStorage;
-      myStorage.setItem('state', JSON.stringify(newState));
-      this.setState(newState);
+  createInput(name, storeListing) {
+    const onInputChange = (e) => {
+      const { value } = e.target;
+      this.props.storeListingChanged(name, value);
     };
 
 
     return (
       <p>
         <span>{name}:</span>
-        <input value={this.state.storeListing[name]} onChange={(e) => {onInputChange(e)}} />
+        <input
+          value={storeListing.get(name)}
+          onChange={(e) => { this.props.storeListingChanged(name, e.target.value); }}
+        />
       </p>
     );
   }
@@ -59,6 +56,10 @@ export class EasyAppDescPage extends React.PureComponent {
     console.log('imagesimagesimagesimagesimagesimages: ', images);
     const iconHiResSrc = images['icon_high_res'];
     const screenshootSrc = images['screenshoot'];
+    const storeListing = this.props.storeListing ? this.props.storeListing : { title: '' };
+    console.log('this.props.storeListing: ', this.props.storeListing.get('title'));
+
+
     return (
       <article>
         <Helmet>
@@ -71,13 +72,13 @@ export class EasyAppDescPage extends React.PureComponent {
         <div>
           <h3>Store Listing</h3>
           {
-            this.createInput('title')
+            this.createInput('title', storeListing)
           }
           {
-            this.createInput('shortDescription')
+            this.createInput('shortDescription', storeListing)
           }
           {
-            this.createInput('fullDescription')
+            this.createInput('fullDescription', storeListing)
           }
           <div>
 
@@ -124,24 +125,31 @@ export function mapDispatchToProps(dispatch) {
       //console.log('onSubmitButtonClickedonSubmitButtonClicked: ', problem);
       //dispatch(createProblem(problem));
     },
+    storeListingChanged: (name, value) => {
+      dispatch(actions.storeListingChanged(name, value));
+    },
     handleFileUpload: (e, photoType) => {
       console.log('photoTypephotoTypephotoType: ', photoType);
       const file = e.target.files[0];
       dispatch(actions.uploadImage(file, photoType));
-    }
+    },
   };
 }
-
-EasyAppDescPage.propTypes = {
-  onSubmitButtonClicked: PropTypes.func,
-  handleFileUpload: PropTypes.func,
-  images: PropTypes.any,
-};
 
 const mapStateToProps = (state, ownProps) => {
   return {
     images: state.get('easyAppDesc').get('images'),
+    storeListing: state.get('easyAppDesc').get('storeListing'),
   };
+};
+
+
+EasyAppDescPage.propTypes = {
+  onSubmitButtonClicked: PropTypes.func,
+  handleFileUpload: PropTypes.func,
+  storeListingChanged: PropTypes.func,
+  images: PropTypes.any,
+  storeListing: PropTypes.any,
 };
 
 const withConnect = connect(

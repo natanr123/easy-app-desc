@@ -17,3 +17,11 @@ export function convertedImageCreated(path, photoType) {
     photoType,
   };
 }
+
+export function storeListingChanged(name, value) {
+  return {
+    type: constants.STORE_LISTING_CHANGED,
+    name,
+    value,
+  };
+}
