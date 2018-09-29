@@ -6,3 +6,6 @@ export const CONVERTED_IMAGE_CREATED =
 
 export const STORE_LISTING_CHANGED =
   'boilerplate/EasyAppDescPage/STORE_LISTING_CHANGED';
+
+export const LOAD_LOCAL_STORAGE =
+  'boilerplate/EasyAppDescPage/LOAD_LOCAL_STORAGE';

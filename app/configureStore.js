@@ -17,6 +17,7 @@ export default function configureStore(initialState = {}, history) {
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const persistedState = loadState();
   const middlewares = [
+    loadState,
     saveState,
     logger,
     sagaMiddleware,

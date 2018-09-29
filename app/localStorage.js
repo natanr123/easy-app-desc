@@ -1,18 +1,21 @@
-export const loadState = () => {
+import { fromJS } from 'immutable';
+
+
+export const loadState = (store) => (next) => (action) => {
   // We need the try block because user may not permit our accessing localStorage.
+  return next(action);
   /*
-  try {
-    const serializedState = localStorage.getItem('state')
-    if (serializedState === null) { // The key 'state' does not exist.
-      return undefined;             // Let our reducer initialize the app.
-    }
-
-    return JSON.parse(serializedState)
-
-  } catch (error) {
-    console.log(error)
-    return undefined // Let our reducer initialize the app.
+  const serializedState = localStorage.getItem('state');
+  if (serializedState === null) { // The key 'state' does not exist.
+    return next(action);
   }
+  if (!(store.getState().get('easyAppDesc'))) {
+    return next(action);
+  }
+  const obj = JSON.parse(serializedState);
+  const im = fromJS(obj);
+  console.log('iiiiiiiiiiiiiiii: ', im);
+  return undefined;
   */
 };
 
@@ -48,6 +51,7 @@ export const saveState = (store) => (next) => (action) => {
   }
   const jsObj = easyAppDesc.toObject();
   console.log('jsObj: ', jsObj);
+  localStorage.setItem('state', JSON.stringify(jsObj));
 
   return result;
 };

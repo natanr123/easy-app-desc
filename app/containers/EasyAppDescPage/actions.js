@@ -25,3 +25,10 @@ export function storeListingChanged(name, value) {
     value,
   };
 }
+
+
+export function loadLocalStorage() {
+  return {
+    type: constants.LOAD_LOCAL_STORAGE,
+  };
+}
