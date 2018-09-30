@@ -35,22 +35,25 @@ export const saveState = (state) => {
 };
 */
 export const logger = (store) => (next) => (action) => {
-  console.log('logger dispatching', action);
+  // console.log('logger dispatching', action);
   const result = next(action);
-  console.log('logger next state', store.getState());
+  // console.log('logger next state', store.getState());
   return result;
 };
 
 export const saveState = (store) => (next) => (action) => {
-  console.log('saveState dispatching', action);
+  // Not good need to fix
+  const temp = ['boilerplate/EasyAppDescPage/STORE_LISTING_CHANGED','boilerplate/EasyAppDescPage/CONVERTED_IMAGE_CREATED'];
+  if (!(temp.includes(action.type))) {
+    return next(action);
+  }
   const result = next(action);
   const easyAppDesc = store.getState().get('easyAppDesc');
   if (!easyAppDesc) {
-    console.log('No easy app desc');
     return result;
   }
   const jsObj = easyAppDesc.toObject();
-  console.log('jsObj: ', jsObj);
+  console.log('saving state ...');
   localStorage.setItem('state', JSON.stringify(jsObj));
 
   return result;

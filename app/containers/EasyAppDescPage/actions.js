@@ -27,8 +27,10 @@ export function storeListingChanged(name, value) {
 }
 
 
-export function loadLocalStorage() {
+export function loadLocalStorage(storeListing, images) {
   return {
     type: constants.LOAD_LOCAL_STORAGE,
+    storeListing,
+    images,
   };
 }
