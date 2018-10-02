@@ -109,18 +109,33 @@ export class EasyAppDescPage extends React.PureComponent {
                 <img style={{width: '100px', height: '100px'}} alt={screenshootSrc} src={screenshootSrc}/>
               </div>
             </div>
-            <br/>
+            <br />
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To 512x512 Hi-res icon:
                 <input type="file" name={'file'} onClick={(event) => {
                   event.target.value = null;
                 }} onChange={(e) => {
-                  this.props.handleFileUpload(e, 'icon_high_res')
+                  this.props.handleFileUpload(e, 'icon_high_res');
                 }}/>
               </form>
               <div>
                 <img style={{width: '100px', height: '100px'}} alt={iconHiResSrc} src={iconHiResSrc}/>
+              </div>
+            </div>
+            <br />
+            <div>
+              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
+                Convert To Feature Graphic 1024 w x 500 h:
+                <input type="file" name={'file'} onClick={(event) => {
+                  event.target.value = null;
+                }} onChange={(e) => {
+                  this.props.handleFileUpload(e, 'feature_graphic');
+                }}
+                />
+              </form>
+              <div>
+                <img style={{width: '100px', height: '100px'}} alt={imagesObj.feature_graphic} src={imagesObj.feature_graphic} />
               </div>
             </div>
           </div>
