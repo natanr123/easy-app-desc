@@ -9,42 +9,9 @@ const argv = require('./util/argv');
 const port = require('./util//port');
 const setup = require('./middlewares/frontendMiddleware');
 const { resolve } = require('path');
-const sharp = require('sharp');
 
 const app = express();
 
-
-const storage = multer.diskStorage({
-  destination: './temp',
-  filename(req, file, cb) {
-    cb(null, `${Date.now()}_${file.originalname}`);
-  },
-});
-
-
-const upload = multer({ storage });
-
-const userUploadsFolder = 'user_uploads';
-app.use(`/${userUploadsFolder}`, express.static(`${userUploadsFolder}`));
-
-app.post('/uploads', upload.single('file'), (req, res) => {
-
-
-  const file = req.file;
-  const path = file.path;
-  const filename = file.filename;
-  console.log(`received file: ${filename}`);
-  const outputFilename = `hi_res_icon_512x512_${filename}`;
-  const outputPath = `./${userUploadsFolder}/${outputFilename}`;
-  sharp(`./${path}`)
-    .resize(512,512).ignoreAspectRatio().png().toFile(outputPath)
-    .then((data) => {
-      console.log(data);
-      const output = { path: `/${userUploadsFolder}/${outputFilename}` };
-      res.send(output);
-    });
-
-});
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
