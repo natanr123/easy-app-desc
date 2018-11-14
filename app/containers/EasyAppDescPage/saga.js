@@ -1,19 +1,28 @@
 import axios from 'axios';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as constants from './constants';
 
-const host = 'http://localhost:3001';
+// const host = 'http://localhost:8080';
 
-function sendUploadFile(file, photoType) {
+function sendUploadFile(apiServer, file, photoType) {
   const formData = new FormData();
   formData.append('file', file);
-  return axios.post(`${host}/uploads/${photoType}`, formData);
+  return axios.post(`${apiServer}/uploads/${photoType}`, formData);
+}
+
+function getApiServer() {
+  return axios.get('/env').then((res) => {
+    return res.data.apiServer;
+  });
 }
 
 export function* uploadImageWorker(action) {
-  const response = yield call(sendUploadFile, action.file, action.photoType);
-  const data = response.data;
+  console.log('uploadImageWorkeruploadImageWorkeruploadImageWorker');
+  const apiServer = yield call(getApiServer);
+  console.log('apiServer: ', apiServer);
+  const response = yield call(sendUploadFile, apiServer, action.file, action.photoType);
+  const { data } = response;
   yield put(actions.convertedImageCreated(`${data.path}`, data.photoType));
 }
 

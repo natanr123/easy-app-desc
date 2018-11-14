@@ -1,7 +1,5 @@
 /* eslint consistent-return:0 */
 
-const multer = require('multer');
-
 const express = require('express');
 const logger = require('./util//logger');
 
@@ -14,6 +12,13 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
+
+app.get('/env', (req, res) => {
+  const env = {
+    apiServer: process.env.API_SERVER,
+  };
+  res.send(env);
+});
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
