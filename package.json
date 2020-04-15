@@ -33,7 +33,6 @@
     "docker_stop_container": "docker stop $(docker ps -a -q)",
     "docker_remove_container": "docker rm $(docker ps -a -q)",
     "docker_remove_images": "docker rmi $(docker images -q)"
-
   },
   "dependencies": {
     "axios": "^0.18.0",
