@@ -17,7 +17,7 @@ export function loadAppData() {
 
 export function appDataLoaded() {
   return {
-    type: constants.LOAD_APP_DATA
+    type: constants.APP_DATA_LOADED
   };
 }
 

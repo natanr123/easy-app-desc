@@ -12,7 +12,7 @@ function sendUploadFile(apiServer, file, photoType) {
 }
 
 function loadAppData(apiServer) {
-  return axios.get(`${apiServer}/1`);
+  return axios.get(`${apiServer}/uploads/1`);
 }
 
 function getApiServer() {
