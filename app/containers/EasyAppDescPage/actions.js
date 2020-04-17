@@ -9,6 +9,18 @@ export function uploadImage(file, photoType) {
   };
 }
 
+export function loadAppData() {
+  return {
+    type: constants.LOAD_APP_DATA
+  };
+}
+
+export function appDataLoaded() {
+  return {
+    type: constants.LOAD_APP_DATA
+  };
+}
+
 
 export function convertedImageCreated(path, photoType) {
   return {

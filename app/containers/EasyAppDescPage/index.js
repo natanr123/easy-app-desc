@@ -9,7 +9,6 @@ import {Helmet} from 'react-helmet';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {createStructuredSelector} from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
@@ -22,31 +21,23 @@ export class EasyAppDescPage extends React.PureComponent {
     super(props);
   }
 
+
+
+
+  componentDidMount() {
+    // const easyAppDescObj = this.getLocalStorage();
+    // if (easyAppDescObj) {
+    //   this.props.loadLocalStorage(fromJS(easyAppDescObj.storeListing), fromJS(easyAppDescObj.images));
+    // }
+    this.props.loadAppData();
+  }
+
   getLocalStorage() {
     const serializedState = localStorage.getItem('state');
     if (serializedState === null) { // The key 'state' does not exist.
       return null;
     }
-
-    const obj = JSON.parse(serializedState);
-    // const im = fromJS(obj);
-    // console.log('iiiiiiiiiiiiiiii: ', im);
-    return obj;
-  }
-
-
-  componentDidMount() {
-    // let stateStr = window.localStorage.getItem('state');
-    // if(!stateStr) {
-    //   return;
-    // }
-    // let state  = JSON.parse(stateStr);
-    // this.setState(state);
-    const easyAppDescObj = this.getLocalStorage();
-    console.log('easyAppDescObjeasyAppDescObjeasyAppDescObjeasyAppDescObj: ', easyAppDescObj);
-    if (easyAppDescObj) {
-      this.props.loadLocalStorage(fromJS(easyAppDescObj.storeListing), fromJS(easyAppDescObj.images));
-    }
+    return JSON.parse(serializedState);
   }
 
   createInput(name, storeListing) {
@@ -64,13 +55,13 @@ export class EasyAppDescPage extends React.PureComponent {
   }
 
   render() {
-    const { images } = this.props;
-    console.log('imagesimagesimagesimagesimagesimages: ', images);
+    const {images} = this.props;
     const imagesObj = images.toObject();
     const iconHiResSrc = imagesObj['icon_high_res'];
     const screenshootSrc = imagesObj['screenshoot'];
+    const icon48x48 = imagesObj['icon48x48'];
+
     const storeListing = this.props.storeListing ? this.props.storeListing : {title: ''};
-    console.log('this.props.storeListing: ', this.props.storeListing.get('title'));
 
 
     return (
@@ -94,22 +85,20 @@ export class EasyAppDescPage extends React.PureComponent {
             this.createInput('fullDescription', storeListing)
           }
           <div>
-
-
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To Min length for any side: 320px. Max length for any side: 3840px. Max aspect ratio: 2:1.:
                 <input type="file" name={'file'} onClick={(event) => {
                   event.target.value = null;
                 }} onChange={(e) => {
-                  this.props.handleFileUpload(e, 'screenshoot')
+                  this.props.handleFileUpload(e, 'screenshoot');
                 }}/>
               </form>
               <div>
                 <img style={{width: '100px', height: '100px'}} alt={screenshootSrc} src={screenshootSrc}/>
               </div>
             </div>
-            <br />
+            <br/>
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To 512x512 Hi-res icon:
@@ -123,7 +112,7 @@ export class EasyAppDescPage extends React.PureComponent {
                 <img style={{width: '100px', height: '100px'}} alt={iconHiResSrc} src={iconHiResSrc}/>
               </div>
             </div>
-            <br />
+            <br/>
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To Feature Graphic 1024 w x 500 h:
@@ -135,9 +124,27 @@ export class EasyAppDescPage extends React.PureComponent {
                 />
               </form>
               <div>
-                <img style={{width: '100px', height: '100px'}} alt={imagesObj.feature_graphic} src={imagesObj.feature_graphic} />
+                <img style={{width: '100px', height: '100px'}} alt={imagesObj.feature_graphic}
+                     src={imagesObj.feature_graphic}/>
               </div>
             </div>
+
+            <br />
+            <div>
+              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
+                Icon 48x48
+                <input type="file" onClick={(event) => {
+                  event.target.value = null;
+                }} onChange={(e) => {
+                  this.props.handleFileUpload(e, 'icon48x48');
+                }}
+                />
+              </form>
+              <div>
+                <img style={{width: '100px', height: '100px'}} alt={icon48x48} src={icon48x48}/>
+              </div>
+            </div>
+
           </div>
 
           <br/>
@@ -145,7 +152,7 @@ export class EasyAppDescPage extends React.PureComponent {
             onClick={() => {
               this.props.onSubmitButtonClicked(this.state.problem);
             }}
-          >
+          >BBBBBBBBBBBBBBBBB
           </button>
         </div>
       </article>
@@ -163,6 +170,10 @@ export function mapDispatchToProps(dispatch) {
     },
     storeListingChanged: (name, value) => {
       dispatch(actions.storeListingChanged(name, value));
+    },
+    loadAppData: () => {
+      console.log('loadAppDataloadAppDataloadAppData: ');
+      dispatch(actions.loadAppData());
     },
     handleFileUpload: (e, photoType) => {
       console.log('photoTypephotoTypephotoType: ', photoType);
@@ -187,6 +198,7 @@ EasyAppDescPage.propTypes = {
   onSubmitButtonClicked: PropTypes.func,
   handleFileUpload: PropTypes.func,
   storeListingChanged: PropTypes.func,
+  loadAppData: PropTypes.func,
   loadLocalStorage: PropTypes.func,
   images: PropTypes.any,
   storeListing: PropTypes.any,

@@ -11,6 +11,10 @@ function sendUploadFile(apiServer, file, photoType) {
   return axios.post(`${apiServer}/uploads/${photoType}`, formData);
 }
 
+function loadAppData(apiServer) {
+  return axios.get(`${apiServer}/1`);
+}
+
 function getApiServer() {
   return axios.get('/env').then((res) => {
     return res.data.apiServer;
@@ -26,6 +30,17 @@ export function* uploadImageWorker(action) {
   yield put(actions.convertedImageCreated(`${data.path}`, data.photoType));
 }
 
+export function* loadAppDataWorker(action) {
+  console.log('loadAppDataWorkerloadAppDataWorkerloadAppDataWorkerloadAppDataWorker');
+  const apiServer = yield call(getApiServer);
+  console.log('apiServer: ', apiServer);
+  const response = yield call(loadAppData, apiServer);
+  const { data } = response;
+  yield put(actions.appDataLoaded(data));
+}
+
+
 export default function* watcher() {
-  yield takeLatest(constants.UPLOAD_IMAGE, uploadImageWorker);
+  yield [takeLatest(constants.UPLOAD_IMAGE, uploadImageWorker),
+    takeLatest(constants.LOAD_APP_DATA, loadAppDataWorker)];
 }
