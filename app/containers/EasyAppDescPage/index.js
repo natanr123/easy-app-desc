@@ -55,12 +55,13 @@ export class EasyAppDescPage extends React.PureComponent {
   }
 
   render() {
-    const {images} = this.props;
+    const { images } = this.props;
+    let { app } = this.props;
     const imagesObj = images.toObject();
     const iconHiResSrc = imagesObj['icon_high_res'];
     const screenshootSrc = imagesObj['screenshoot'];
-    const icon48x48 = imagesObj['icon48x48'];
-
+    console.log('appappappappappapp1111111: ', app);
+    app = app || {};
     const storeListing = this.props.storeListing ? this.props.storeListing : {title: ''};
 
 
@@ -141,7 +142,7 @@ export class EasyAppDescPage extends React.PureComponent {
                 />
               </form>
               <div>
-                <img style={{width: '100px', height: '100px'}} alt={icon48x48} src={icon48x48}/>
+                <img style={{width: '100px', height: '100px'}} alt={app.icon48x48} src={app.icon48x48}/>
               </div>
             </div>
 
@@ -189,6 +190,7 @@ export function mapDispatchToProps(dispatch) {
 const mapStateToProps = (state, ownProps) => {
   return {
     images: state.get('easyAppDesc').get('images'),
+    app: state.get('easyAppDesc').get('app'),
     storeListing: state.get('easyAppDesc').get('storeListing'),
   };
 };
@@ -202,6 +204,7 @@ EasyAppDescPage.propTypes = {
   loadLocalStorage: PropTypes.func,
   images: PropTypes.any,
   storeListing: PropTypes.any,
+  app: PropTypes.any
 };
 
 const withConnect = connect(

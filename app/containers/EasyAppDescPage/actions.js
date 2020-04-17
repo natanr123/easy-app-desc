@@ -15,9 +15,10 @@ export function loadAppData() {
   };
 }
 
-export function appDataLoaded() {
+export function appDataLoaded(data) {
   return {
-    type: constants.APP_DATA_LOADED
+    type: constants.APP_DATA_LOADED,
+    data
   };
 }
 

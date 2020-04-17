@@ -14,6 +14,10 @@ function problemReducer(state = initialState, action) {
     }
     case constants.LOAD_LOCAL_STORAGE:
       return state.set('storeListing', action.storeListing).set('images', action.images);
+    case constants.APP_DATA_LOADED:
+      console.log('APP_DATA_LOADEDAPP_DATA_LOADEDAPP_DATA_LOADEDAPP_DATA_LOADED');
+      return state.set('app', action.data);
+
     default:
       return state;
   }
