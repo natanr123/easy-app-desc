@@ -118,26 +118,15 @@ export class EasyAppDescPage extends React.PureComponent {
             </div>
 
             <br />
-            <div>
-              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-                Icon 48x48
-                <input type="file" onClick={(event) => {
-                  event.target.value = null;
-                }} onChange={(e) => {
-                  this.props.handleFileUpload(e, 'icon48x48');
-                }}
-                />
-              </form>
-              <div>
-                <img style={{width: '100px', height: '100px'}} alt={app.icon48x48} src={app.icon48x48}/>
-              </div>
-            </div>
 
 
-            <ResizeInput targetWidth={36} targetHeight={36} url={app.icon36x36} onChange={this.props.handleFileUpload} />
-            <ResizeInput targetWidth={72} targetHeight={72} url={app.icon72x72} onChange={this.props.handleFileUpload} />
-            <ResizeInput targetWidth={96} targetHeight={96} url={app.icon96x96} onChange={this.props.handleFileUpload} />
-            <ResizeInput targetWidth={512} targetHeight={512} url={app.icon512x512} onChange={this.props.handleFileUpload} />
+            <ResizeInput prefix={'icon'} targetWidth={48} targetHeight={48} url={app.icon36x36} onChange={this.props.handleFileUpload} />
+
+            <ResizeInput prefix={'icon'} targetWidth={36} targetHeight={36} url={app.icon36x36} onChange={this.props.handleFileUpload} />
+            <ResizeInput prefix={'icon'} targetWidth={72} targetHeight={72} url={app.icon72x72} onChange={this.props.handleFileUpload} />
+            <ResizeInput prefix={'icon'} targetWidth={96} targetHeight={96} url={app.icon96x96} onChange={this.props.handleFileUpload} />
+            <ResizeInput prefix={'icon'} targetWidth={512} targetHeight={512} url={app.icon512x512} onChange={this.props.handleFileUpload} />
+            <ResizeInput prefix={'feature'} targetWidth={1024} targetHeight={500} url={app.feature1024x500} onChange={this.props.handleFileUpload} />
 
           </div>
 
