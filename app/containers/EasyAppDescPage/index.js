@@ -131,6 +131,9 @@ export class EasyAppDescPage extends React.PureComponent {
           </div>
 
           <br />
+          <div>
+            <a href="https://app-privacy-policy-generator.firebaseapp.com/">Generate Privacy Policy</a>
+          </div>
           <button
             onClick={() => {
               this.props.onSubmitButtonClicked(this.state.problem);
