@@ -14,6 +14,8 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import loadProblemWatcher from './saga';
 import * as actions from './actions';
+import ResizeInput from "../../components/ResizeInput";
+import ResizeScreenshot from "../../components/ResizeScreenshot";
 
 /* eslint-disable react/prefer-stateless-function */
 export class EasyAppDescPage extends React.PureComponent {
@@ -58,8 +60,6 @@ export class EasyAppDescPage extends React.PureComponent {
     const { images } = this.props;
     let { app } = this.props;
     const imagesObj = images.toObject();
-    const iconHiResSrc = imagesObj['icon_high_res'];
-    const screenshootSrc = imagesObj['screenshoot'];
     console.log('appappappappappapp1111111: ', app);
     app = app || {};
     const storeListing = this.props.storeListing ? this.props.storeListing : {title: ''};
@@ -88,32 +88,19 @@ export class EasyAppDescPage extends React.PureComponent {
           <div>
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-                Convert To Min length for any side: 320px. Max length for any side: 3840px. Max aspect ratio: 2:1.:
+                Screenshot1 - Convert To Min length for any side: 320px. Max length for any side: 3840px. Max aspect ratio: 2:1.:
                 <input type="file" name={'file'} onClick={(event) => {
                   event.target.value = null;
                 }} onChange={(e) => {
-                  this.props.handleFileUpload(e, 'screenshoot');
+                  this.props.handleFileUpload(e, 'screenshot1');
                 }}/>
               </form>
               <div>
-                <img style={{width: '100px', height: '100px'}} alt={screenshootSrc} src={screenshootSrc}/>
+                <img style={{width: '100px', height: '100px'}} alt={app.screenshot1} src={app.screenshot1}/>
               </div>
             </div>
             <br/>
-            <div>
-              <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
-                Convert To 512x512 Hi-res icon:
-                <input type="file" name={'file'} onClick={(event) => {
-                  event.target.value = null;
-                }} onChange={(e) => {
-                  this.props.handleFileUpload(e, 'icon_high_res');
-                }}/>
-              </form>
-              <div>
-                <img style={{width: '100px', height: '100px'}} alt={iconHiResSrc} src={iconHiResSrc}/>
-              </div>
-            </div>
-            <br/>
+            <ResizeScreenshot index={2} url={app.screenshot2} onChange={this.props.handleFileUpload} />
             <div>
               <form action={'/uploads'} encType={'multipart/form-data'} method="POST">
                 Convert To Feature Graphic 1024 w x 500 h:
@@ -146,9 +133,15 @@ export class EasyAppDescPage extends React.PureComponent {
               </div>
             </div>
 
+
+            <ResizeInput targetWidth={36} targetHeight={36} url={app.icon36x36} onChange={this.props.handleFileUpload} />
+            <ResizeInput targetWidth={72} targetHeight={72} url={app.icon72x72} onChange={this.props.handleFileUpload} />
+            <ResizeInput targetWidth={96} targetHeight={96} url={app.icon96x96} onChange={this.props.handleFileUpload} />
+            <ResizeInput targetWidth={512} targetHeight={512} url={app.icon512x512} onChange={this.props.handleFileUpload} />
+
           </div>
 
-          <br/>
+          <br />
           <button
             onClick={() => {
               this.props.onSubmitButtonClicked(this.state.problem);
